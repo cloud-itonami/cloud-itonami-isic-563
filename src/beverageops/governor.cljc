@@ -15,17 +15,20 @@
 (defn- scope-excluded? [proposal]
   "Check 3: Scope exclusion — block age-verification, responsible-service, recipe, alcohol decisions
    EN+JA substring matching combined into single explicit boolean return value"
-  (let [proposal-str (str proposal)
+  (let [proposal-str (.toLowerCase (str proposal))
         blocked-patterns
-        ["age-verification" "ID-check" "ID-checking" "id-checking" "age verify"
+        ["age-verification" "id-check" "id-checking" "age verify"
          "responsible-service" "responsible service" "alcohol-service" "alcohol service"
          "recipe" "drink-recipe" "drink content" "beverage recipe"
          "alcohol-inventory" "alcohol ordering" "alcohol purchase"
          "年齢確認" "未成年" "飲酒責任" "調理" "アルコール" "年齢"
-         "ID確認" "本人確認"]]
+         "id確認" "本人確認"]
+        is-excluded (some (fn [pattern]
+                           (>= (.indexOf proposal-str (.toLowerCase pattern)) 0))
+                         blocked-patterns)]
     ;; Special case: flag-safety-concern is allowed even if it mentions safety
     (and (not= (:op proposal) :flag-safety-concern)
-         (some #(.contains (.toLowerCase proposal-str) (.toLowerCase %)) blocked-patterns))))
+         is-excluded)))
 
 (defprotocol IGovernor
   (evaluate [governor store proposal]))

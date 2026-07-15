@@ -19,7 +19,8 @@
   (supply-by-name [_ name] (get @supplies name))
   (all-supplies [_] (vals @supplies))
   (append-ledger! [_ op-id operation]
-    (swap! ledger conj {:op-id op-id :op operation :ts (System/currentTimeMillis)}))
+    (swap! ledger conj {:op-id op-id :op operation :ts #?(:clj (System/currentTimeMillis)
+                                                            :cljs (js/Date.now))}))
   (ledger-entries [_] @ledger))
 
 (defn create-store []

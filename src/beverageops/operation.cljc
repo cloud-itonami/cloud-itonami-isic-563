@@ -7,7 +7,8 @@
 
 (defn propose-operation [store advisor governor proposal]
   "Single operation: propose, score, evaluate, log"
-  (let [op-id (str "op-" (System/currentTimeMillis))
+  (let [op-id (str "op-" #?(:clj (System/currentTimeMillis)
+                           :cljs (js/Date.now)))
         score (adv/score-proposal advisor proposal)
         decision (gov/evaluate-proposal governor store proposal)]
     (store/append-ledger! store op-id
