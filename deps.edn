@@ -1,0 +1,10 @@
+{:paths ["src" "resources"]
+ :deps {org.clojure/clojure {:mvn/version "1.11.1"}
+        org.clojure/clojurescript {:mvn/version "1.10.914"}
+        io.github.com-junkawasaki/langgraph-clj {:local/root "../../com-junkawasaki/langgraph-clj"}}
+ :aliases
+ {:dev {:extra-deps {io.github.kotoba-lang/langchain-clj {:local/root "../../kotoba-lang/langchain-clj"}
+                     io.github.kotoba-lang/kototama {:local/root "../../kotoba-lang/kototama"}}
+        :extra-paths ["dev"]}
+  :test {:extra-deps {io.github.borkdude/nbb {:mvn/version "1.2.183"}}}
+  :lint {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2024.04.13"}}}}}

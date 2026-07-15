@@ -1,0 +1,16 @@
+{:adr/number "2607162700"
+ :module/id "cloud-itonami-isic-563"
+ :module/name "ISIC-563: Beverage-Serving Administrative Coordination Actor"
+ :module/domain "bar/cafe administrative coordination"
+ :module/isic-code 563
+ :actor/pattern :langgraph-clj-statgraph
+ :actor/governor-checks
+ [{:name "table-order-unverified" :type :hard}
+  {:name "effect-not-propose" :type :hard}
+  {:name "scope-exclusion" :type :hard}]
+ :actor/phase-progression [0 1 2 3]
+ :repo/visibility :public
+ :repo/github "https://github.com/cloud-itonami/cloud-itonami-isic-563"
+ :repo/business-id "cloud-itonami-isic-563"
+ :resource/dependencies [:clojure :clojurescript :langgraph-clj]
+ :test/coverage :full}
