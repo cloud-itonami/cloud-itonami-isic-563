@@ -1,10 +1,21 @@
 {:paths ["src" "resources"]
+ ;; NOTE (flagship checklist item 2, ADR-2607189300 Wave5): the previous
+ ;; top-level :deps entry `io.github.com-junkawasaki/langgraph-clj
+ ;; {:local/root "../../kotoba-lang/langgraph"}` was dead weight -- grep
+ ;; across every `.cljc`/`.clj`/`.cljs` in this repo confirms nothing
+ ;; ever `:require`s langgraph/langchain/kototama, and the coordinate
+ ;; itself was stale (pre-rename `com-junkawasaki` org; the real repo
+ ;; moved to `kotoba-lang/langgraph`). It only ever forced every
+ ;; `clojure -M` invocation to need that sibling checkout present for no
+ ;; reason. Removed rather than fixed-in-place since nothing in this
+ ;; repo's actual actor (`beverageops.operation` is a plain synchronous
+ ;; function, not a langgraph-clj StateGraph, unlike sibling actors in
+ ;; this fleet) depends on it.
  :deps {org.clojure/clojure {:mvn/version "1.11.1"}
-        org.clojure/clojurescript {:mvn/version "1.10.914"}
-        io.github.com-junkawasaki/langgraph-clj {:local/root "../../kotoba-lang/langgraph"}}
+        org.clojure/clojurescript {:mvn/version "1.10.914"}}
  :aliases
- {:dev {:extra-deps {io.github.kotoba-lang/langchain-clj {:local/root "../../kotoba-lang/langchain"}
-                     io.github.kotoba-lang/kototama {:local/root "../../kotoba-lang/kototama"}}
-        :extra-paths ["dev"]}
-  :test {:extra-deps {io.github.borkdude/nbb {:mvn/version "1.2.183"}}}
+ {;; clojure -M:render-html [out-file] -> build-time regeneration of
+  ;; docs/samples/operator-console.html through the real actor
+  ;; (flagship checklist item 2, ADR-2607189300 Wave5).
+  :render-html {:main-opts ["-m" "beverageops.render-html"]}
   :lint {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2024.04.13"}}}}}
