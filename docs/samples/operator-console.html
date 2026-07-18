@@ -1,0 +1,80 @@
+<html><head><meta charset="utf-8"><title>cloud-itonami-isic-563 &middot; beverage-serving administrative coordination</title><style>
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.ok { color: #137a3f; }
+body { font-family: system-ui,-apple-system,sans-serif; margin: 0; color: #1a1a1a; background: #fafafa; }
+header.bar { display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: #fff; border-bottom: 1px solid #e5e5e5; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #f0f0f0; }
+h2 { margin-top: 0; font-size: 15px; }
+.warn { color: #b25c00; background: #fff8e1; padding: 2px 6px; border-radius: 4px; }
+main { max-width: 980px; margin: 24px auto; padding: 0 20px; }
+header.bar h1 { font-size: 18px; margin: 0; font-weight: 600; }
+.muted { color: #888; font-size: 13px; }
+.critical { color: #fff; background: #b3261e; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+.card { background: #fff; border: 1px solid #e5e5e5; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+.err { color: #b3261e; background: #fbe9e7; padding: 2px 6px; border-radius: 4px; }
+th { font-weight: 600; color: #555; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+header.bar .badge { margin-left: auto; font-size: 12px; color: #666; }
+code { font-size: 12px; background: #f4f4f4; padding: 1px 4px; border-radius: 3px; }
+</style></head><body>
+<header class="bar">
+  <h1>Beverage-serving administrative coordination (ISIC 563) — Operator Console</h1>
+  <span class="badge">read-only sample · governor-gated · never touches age-verification/recipes/alcohol ordering</span>
+</header>
+<main>
+  <section class="card">
+    <h2>Tables</h2>
+    <p class="muted">Demo snapshot — build-time-generated from <code>beverageops.store</code> via <code>beverageops.render-html</code> (<code>clojure -M:render-html</code>), regenerated nightly.</p>
+    <table>
+      <thead><tr><th>Table</th><th>Name</th><th>Seats</th><th>Roster status</th></tr></thead>
+      <tbody>
+        <tr><td>t1</td><td>Table 1</td><td>4</td><td><span class="ok">registered &amp; verified</span></td></tr>
+        <tr><td>t2</td><td>Table 2</td><td>2</td><td><span class="warn">registered, unverified</span></td></tr>
+        <tr><td>t3</td><td>Table 3</td><td>6</td><td><span class="err">unregistered</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+  <section class="card">
+    <h2>Supplies</h2>
+    <table>
+      <thead><tr><th>Supply</th><th>Stock</th><th>Unit</th></tr></thead>
+      <tbody>
+        <tr><td>cleaning-supplies</td><td>50</td><td>units</td></tr>
+        <tr><td>glassware</td><td>200</td><td>pieces</td></tr>
+        <tr><td>napkins</td><td>500</td><td>units</td></tr>
+      </tbody>
+    </table>
+  </section>
+  <section class="card">
+    <h2>Action gate (Beverage-Ops Governor)</h2>
+    <p class="muted">HARD holds cannot be overridden. Age-verification, responsible-service, recipe and alcohol-ordering territory are permanently out of scope — see governor scope exclusion.</p>
+    <table>
+      <thead><tr><th>Op</th><th>Gate</th></tr></thead>
+      <tbody>
+        <tr><td><code>:schedule-table-reservation</code></td><td><span class="warn">table must be registered &amp; verified</span></td></tr>
+        <tr><td><code>:coordinate-order-status-update</code></td><td><span class="warn">table must be registered &amp; verified</span></td></tr>
+        <tr><td><code>:coordinate-supply-request</code></td><td><span class="ok">no table-verification gate (facility op)</span></td></tr>
+        <tr><td><code>:schedule-staff-shift-proposal</code></td><td><span class="ok">no table-verification gate (facility op)</span></td></tr>
+        <tr><td><code>:flag-safety-concern</code></td><td><span class="ok">no table-verification gate (facility op)</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+  <section class="card">
+    <h2>Demo scenario results (this run)</h2>
+    <p class="muted">5 approved &middot; 4 HARD-held — every row is a real <code>beverageops.operation/propose-operation</code> call through the real governor, not hand-typed.</p>
+    <table>
+      <thead><tr><th>#</th><th>Op</th><th>Target</th><th>Status</th><th>Governor reason</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><code>schedule-table-reservation</code></td><td>t1</td><td><span class="ok">approved</span></td><td><span class="ok">auto-commit &middot; table-operation-verified</span></td></tr>
+        <tr><td>2</td><td><code>coordinate-order-status-update</code></td><td>t1</td><td><span class="ok">approved</span></td><td><span class="ok">auto-commit &middot; table-operation-verified</span></td></tr>
+        <tr><td>3</td><td><code>coordinate-supply-request</code></td><td>napkins</td><td><span class="ok">approved</span></td><td><span class="ok">auto-logged &middot; no verification gate (facility op)</span></td></tr>
+        <tr><td>4</td><td><code>schedule-staff-shift-proposal</code></td><td>s1</td><td><span class="ok">approved</span></td><td><span class="ok">auto-logged &middot; no verification gate (facility op)</span></td></tr>
+        <tr><td>5</td><td><code>flag-safety-concern</code></td><td>customer intoxication</td><td><span class="ok">approved</span></td><td><span class="ok">auto-logged &middot; no verification gate (facility op)</span></td></tr>
+        <tr><td>6</td><td><code>schedule-table-reservation</code></td><td>t2</td><td><span class="err">rejected</span></td><td><span class="critical">HARD hold &middot; table-unverified</span></td></tr>
+        <tr><td>7</td><td><code>schedule-table-reservation</code></td><td>t1</td><td><span class="err">rejected</span></td><td><span class="critical">HARD hold &middot; effect-not-propose</span></td></tr>
+        <tr><td>8</td><td><code>schedule-table-reservation</code></td><td>t1</td><td><span class="err">rejected</span></td><td><span class="critical">HARD hold &middot; scope-excluded</span></td></tr>
+        <tr><td>9</td><td><code>request-live-music-booking</code></td><td>acme-live-music</td><td><span class="err">rejected</span></td><td><span class="critical">HARD hold &middot; operation-unknown</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+</body></html>

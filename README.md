@@ -61,6 +61,22 @@ nbb run-tests.cljs
 nbb run-demo.cljs
 ```
 
+## Operator Console (build-time HTML sample)
+
+`docs/samples/operator-console.html` is generated at build time by
+running the REAL actor (`beverageops.operation` -> `beverageops.governor`
+-> `beverageops.store`) through a scenario covering every disposition the
+governor can reach: auto-committed table/facility operations and four
+distinct HARD-hold reasons (`table-unverified`, `effect-not-propose`,
+`scope-excluded`, `operation-unknown`) — never a hand-typed mockup.
+Regenerated nightly by `.github/workflows/regenerate.yml` (commit-only-on-
+change).
+
+```bash
+# Regenerate the operator console (pure JVM Clojure, no nbb)
+clojure -M:render-html
+```
+
 ## References
 
 - ADR-2607162700: Full decision record & rationale
