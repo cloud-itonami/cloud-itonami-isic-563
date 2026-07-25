@@ -3,24 +3,44 @@
 
 ;;; Three HARD, un-overridable Governor checks
 
-(defn- table-verified? [store table-id]
+(defn- table-verified?
   "Check 1: Table must exist AND be :registered? AND :verified?"
+  [store table-id]
   (when-let [table (store/table-by-id store table-id)]
     (and (:registered? table) (:verified? table))))
 
-(defn- effect-is-propose? [proposal]
+(defn- effect-is-propose?
   "Check 2: Effect must be :propose"
+  [proposal]
   (= (:effect proposal) :propose))
 
-(defn- scope-excluded? [proposal]
-  "Check 3: Scope exclusion — block age-verification, responsible-service, recipe, alcohol decisions
-   EN+JA substring matching combined into single explicit boolean return value"
+(defn- scope-excluded?
+  "Check 3: Scope exclusion — block age-verification, responsible-service,
+   recipe, alcohol AND food-safety decisions. EN+JA substring matching,
+   combined into a single explicit boolean return value.
+
+   The docstring used to sit AFTER the argument vector, making it a discarded
+   string literal rather than documentation.
+
+   food-safety was added 2026-07-25 to reconcile a real disagreement: the test
+   `scope-exclusion-food-safety` asserted a food-safety description must be
+   :rejected, but no food pattern existed here and README's \"Explicitly OUT of
+   Scope\" list did not mention it either, so the assertion had been failing
+   silently -- the suite hardcoded its own total and reported \"All tests
+   passed!\" regardless. Reconciled toward the STRICTER reading (block it)
+   rather than deleting the assertion, because dropping a test that asserts a
+   HARD gate rejects something is the loosening direction. A beverage-serving
+   coordinator making food-safety determinations is the same
+   licensed-professional boundary the other exclusions here draw. README is
+   updated to match, so the declared scope and the gate now agree."
+  [proposal]
   (let [proposal-str (.toLowerCase (str proposal))
         blocked-patterns
         ["age-verification" "id-check" "id-checking" "age verify"
          "responsible-service" "responsible service" "alcohol-service" "alcohol service"
          "recipe" "drink-recipe" "drink content" "beverage recipe"
          "alcohol-inventory" "alcohol ordering" "alcohol purchase"
+         "food-safety" "food safety" "haccp"
          "年齢確認" "未成年" "飲酒責任" "調理" "アルコール" "年齢"
          "id確認" "本人確認"]
         is-excluded (some (fn [pattern]

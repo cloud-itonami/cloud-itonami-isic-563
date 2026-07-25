@@ -18,4 +18,11 @@
   ;; docs/samples/operator-console.html through the real actor
   ;; (flagship checklist item 2, ADR-2607189300 Wave5).
   :render-html {:main-opts ["-m" "beverageops.render-html"]}
-  :lint {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2024.04.13"}}}}}
+  ;; Was :extra-deps with clj-kondo 2024.04.13 -- a version that does not exist
+  ;; in Maven Central -- and no :main-opts, so `clojure -M:lint` failed on
+  ;; classpath and reported zero warnings. That is why six misplaced docstrings
+  ;; survived here. Fleet-standard shape (matches cloud-itonami-isic-1020).
+  :lint {:replace-deps {clj-kondo/clj-kondo {:mvn/version "2024.11.14"}}
+         :main-opts    ["-m" "clj-kondo.main"
+                        "--lint" "src" "test"
+                        "--fail-level" "error"]}}}
