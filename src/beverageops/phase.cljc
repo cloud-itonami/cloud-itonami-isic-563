@@ -16,12 +16,14 @@
 (defn phase-config [phase-num]
   (get phases phase-num))
 
-(defn can-auto-commit? [phase-num op-type]
+(defn can-auto-commit?
   "Check if operation type can auto-commit in given phase"
+  [phase-num op-type]
   (let [phase-info (phase-config phase-num)]
     (and (:auto-commit? phase-info)
          (contains? (:allowed-ops phase-info) op-type))))
 
-(defn safety-always-escalates? [op-type]
+(defn safety-always-escalates?
   "Safety concerns always escalate regardless of phase"
+  [op-type]
   (= op-type :flag-safety-concern))

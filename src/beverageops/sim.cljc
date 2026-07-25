@@ -28,7 +28,7 @@
     (println "╚════════════════════════════════════════════════════════════╝\n")
     (let [results (map-indexed
                     (fn [i [name fn]]
-                      (print (format "[%d] %s ... " (inc i) name))
+                      (print (str "[" (inc i) "] " name " ... "))
                       (flush)
                       (let [result (run-scenario name fn store advisor governor)]
                         (println (if (= (:status result) :complete) "✓" "✗"))
@@ -36,5 +36,5 @@
                     scenarios)]
       (println)
       (println "Demo complete. Ledger entries:")
-      (println (format "  Total operations: %d" (count (store/ledger-entries store))))
+      (println (str "  Total operations: " (count (store/ledger-entries store))))
       results)))

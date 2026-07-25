@@ -16,13 +16,15 @@ This actor handles **administrative coordination only**:
 - Responsible-service-of-alcohol determinations
 - Drink recipes / beverage content decisions
 - Alcohol/beverage ingredient ordering (see non-beverage supply coordination above)
+- Food-safety / HACCP determinations (a beverage-serving coordinator does not
+  make food-safety calls; the governor blocks them)
 - Safety-authority overrides (escalations only, never self-commits)
 
 ## Governor: Three HARD, Un-overridable Checks
 
 1. **Table/Order-Record Verification**: Target table/order must exist AND be `:registered?` AND `:verified?` (for table/order-specific operations)
 2. **Effect = `:propose`**: Effect must always be `:propose`; no other effect values accepted
-3. **Scope Exclusion**: Blocked patterns (EN+JA substring matching) prevent age-verification, responsible-service, recipe, and alcohol-specific decisions
+3. **Scope Exclusion**: Blocked patterns (EN+JA substring matching) prevent age-verification, responsible-service, recipe, alcohol-specific, and food-safety/HACCP decisions
 
 ## Operation Allowlist (Closed)
 

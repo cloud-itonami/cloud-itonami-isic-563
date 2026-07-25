@@ -8,14 +8,17 @@
 (defn assert-equals [expected actual test-name]
   (if (= expected actual)
     (do (print "✓") (flush) true)
-    (do (print (format "✗ [%s]" test-name)) (flush) false)))
+    (do (print (str "✗ [" test-name "]")) (flush) false)))
 
 (defn test-store []
   (let [store (store/create-store)]
+    ;; Setup, not an assertion. This call used to sit INSIDE the vector below,
+    ;; where it contributed a non-boolean element that could never count as a
+    ;; pass -- invisible while the summary hardcoded its own total.
+    (store/append-ledger! store "op1" {:test true})
     [(assert-equals "Table 1" (:name (store/table-by-id store "t1")) "table-lookup")
      (assert-equals 3 (count (store/all-tables store)) "all-tables")
      (assert-equals "napkins" (:name (store/supply-by-name store "napkins")) "supply-lookup")
-     (store/append-ledger! store "op1" {:test true})
      (assert-equals 1 (count (store/ledger-entries store)) "ledger-append")]))
 
 (defn test-governor []
@@ -79,15 +82,22 @@
   (println "\n╔════════════════════════════════════════════════════════════╗")
   (println "║ ISIC-563 Beverage Operations Coordination Actor Tests      ║")
   (println "╚════════════════════════════════════════════════════════════╝\n")
-  (let [tests (concat
-                (map-indexed (fn [i t] [i t]) (test-store))
-                (map-indexed (fn [i t] [(+ 4 i) t]) (test-governor))
-                (map-indexed (fn [i t] [(+ 10 i) t]) (test-operations))
-                (map-indexed (fn [i t] [(+ 13 i) t]) (test-phases)))]
+  ;; Indices are derived, not hardcoded: the previous +4/+10/+13 offsets no
+  ;; longer matched the section sizes, so the printed numbers overlapped.
+  (let [tests (map-indexed (fn [i t] [i t])
+                           (concat (test-store) (test-governor)
+                                   (test-operations) (test-phases)))]
     (doall (map (fn [[i result]]
-                  (print (format "[%d] " (inc i))) (flush))
+                  (print (str "[" (inc i) "] ")) (flush))
                 tests))
     (println)
-    (let [passed (count (filter true? (map second tests)))]
-      (println (format "\nAll tests passed! (%d/16)" passed))
-      (= passed 16))))
+    ;; The summary used to print "All tests passed!" unconditionally, with the
+    ;; count interpolated -- so a 10/16 run announced success. It also compared
+    ;; against a hardcoded 16 that nothing kept in step with the actual tests.
+    ;; Both fixed: the total is derived, and the wording follows the result.
+    (let [total (count tests)
+          passed (count (filter true? (map second tests)))
+          ok? (and (pos? total) (= passed total))]
+      (println (str "\n" (if ok? "All tests passed!" "TESTS FAILED")
+                    " (" passed "/" total ")"))
+      ok?)))

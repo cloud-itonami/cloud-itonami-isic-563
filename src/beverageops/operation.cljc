@@ -5,8 +5,9 @@
 
 ;;; StateGraph-style operation orchestration (single-run, no internal loops)
 
-(defn propose-operation [store advisor governor proposal]
+(defn propose-operation
   "Single operation: propose, score, evaluate, log"
+  [store advisor governor proposal]
   (let [op-id (str "op-" #?(:clj (System/currentTimeMillis)
                            :cljs (js/Date.now)))
         score (adv/score-proposal advisor proposal)

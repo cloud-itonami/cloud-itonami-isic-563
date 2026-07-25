@@ -1,3 +1,12 @@
+;; Run the beverageops actor test suite under nbb.
+;;
+;;   nbb --classpath src:test run-tests.cljs
+;;
+;; The `--classpath` is required: without it nbb cannot resolve
+;; `beverageops.test`. Exits 1 when any test fails -- this script previously
+;; discarded `run-tests`'s boolean, so the process exited 0 no matter what and
+;; nothing could gate on the result.
 (require '[beverageops.test :as t])
 
-(t/run-tests)
+(when-not (t/run-tests)
+  (js/process.exit 1))
