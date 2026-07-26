@@ -11,7 +11,11 @@
  ;; repo's actual actor (`beverageops.operation` is a plain synchronous
  ;; function, not a langgraph-clj StateGraph, unlike sibling actors in
  ;; this fleet) depends on it.
- :deps {org.clojure/clojure {:mvn/version "1.11.1"}
+ :deps {
+        io.github.kotoba-lang/jp-go-digital-design-system
+        {:git/url "https://github.com/kotoba-lang/jp-go-digital-design-system"
+         :git/sha "83db99546eabc53613ae826ea41d1533a3c574af"}
+org.clojure/clojure {:mvn/version "1.11.1"}
         org.clojure/clojurescript {:mvn/version "1.10.914"}}
  :aliases
  {;; clojure -M:render-html [out-file] -> build-time regeneration of
