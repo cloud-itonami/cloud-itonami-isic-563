@@ -7,7 +7,7 @@
 # docs/samples/, and no generator at all.
 #
 # JVM Clojure (clojure -M), not nbb -- this repo's own README documents
-# `nbb run-tests.cljs`/`nbb run-demo.cljs`, but that pair is broken
+# `nbb run-tests.cljk`/`nbb run-demo.cljk`, but that pair is broken
 # under nbb (`format` does not resolve in ClojureScript; confirmed by
 # running it before writing this workflow) and is unrelated to this
 # renderer anyway. `beverageops.render-html` is plain JVM Clojure with

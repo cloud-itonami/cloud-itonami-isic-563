@@ -48,15 +48,15 @@
   Confirmed non-trap before writing this file: this repo's real seed
   ids (`t1`/`t2`/`t3`, `napkins`/`glassware`/`cleaning-supplies`) match
   exactly what `beverageops.store/create-store` seeds AND what this
-  repo's own WORKING root-level `demo.cljs`/`test.cljs` (nbb-runnable,
-  `nbb -cp src demo.cljs` / `nbb -cp src test.cljs`) already exercise --
+  repo's own WORKING root-level `demo.cljk`/`test.cljk` (nbb-runnable,
+  `nbb -cp src demo.cljk` / `nbb -cp src test.cljk`) already exercise --
   both were run and passed before this file was written. Every proposal
   below was independently dry-run through the real
   `beverageops.operation/propose-operation` -> `beverageops.governor/
   evaluate-proposal` path first to confirm its expected disposition
   before being hard-coded into `run-demo!` (the alternate
-  `src/beverageops/sim.cljc` + `test/beverageops/test.cljc` pair,
-  reached via `run-demo.cljs`/`run-tests.cljs`, is a SEPARATE, broken
+  `src/beverageops/sim.cljk` + `test/beverageops/test.cljk` pair,
+  reached via `run-demo.cljk`/`run-tests.cljk`, is a SEPARATE, broken
   pair under nbb -- `format` is not resolvable in ClojureScript/nbb --
   but that bug is irrelevant here: this renderer is plain JVM Clojure
   and never touches those two files).

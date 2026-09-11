@@ -13,10 +13,10 @@ cd cloud-itonami-isic-563
 clojure -M:dev
 
 # Run tests
-nbb run-tests.cljs
+nbb run-tests.cljk
 
 # Run demo
-nbb run-demo.cljs
+nbb run-demo.cljk
 ```
 
 ## Code Standards
@@ -24,7 +24,7 @@ nbb run-demo.cljs
 - **ClojureScript/Clojure**: Use `.cljc` for portable code (JVM/Node/WASM)
 - **Formatting**: Follow standard Clojure conventions (kebab-case, 2-space indentation)
 - **Namespaces**: One namespace per file; use `src/beverageops/` for modules
-- **Tests**: Collocate tests in `test/beverageops/test.cljc`; all tests must pass before PR
+- **Tests**: Collocate tests in `test/beverageops/test.cljk`; all tests must pass before PR
 
 ## Governor Checks (Inviolable)
 
@@ -46,7 +46,7 @@ This actor is **administrative coordination only**:
 1. **Fork** the repository
 2. **Create a branch** for your feature: `git checkout -b feature/my-feature`
 3. **Write tests** for new functionality
-4. **Run tests** to ensure all pass: `nbb run-tests.cljs`
+4. **Run tests** to ensure all pass: `nbb run-tests.cljk`
 5. **Commit** with clear messages: `git commit -m "feat: description"`
 6. **Push** to your fork: `git push origin feature/my-feature`
 7. **Open a PR** with description of changes
