@@ -6,7 +6,7 @@
  ;; ever `:require`s langgraph/langchain/kototama, and the coordinate
  ;; itself was stale (pre-rename `com-junkawasaki` org; the real repo
  ;; moved to `kotoba-lang/langgraph`). It only ever forced every
- ;; `clojure -M` invocation to need that sibling checkout present for no
+ ;; `kbb -M` invocation to need that sibling checkout present for no
  ;; reason. Removed rather than fixed-in-place since nothing in this
  ;; repo's actual actor (`beverageops.operation` is a plain synchronous
  ;; function, not a langgraph-clj StateGraph, unlike sibling actors in
@@ -22,12 +22,12 @@
 org.clojure/clojure {:mvn/version "1.11.1"}
         org.clojure/clojurescript {:mvn/version "1.10.914"}}
  :aliases
- {;; clojure -M:render-html [out-file] -> build-time regeneration of
+ {;; kbb -M:render-html [out-file] -> build-time regeneration of
   ;; docs/samples/operator-console.html through the real actor
   ;; (flagship checklist item 2, ADR-2607189300 Wave5).
   :render-html {:main-opts ["-m" "beverageops.render-html"]}
   ;; Was :extra-deps with clj-kondo 2024.04.13 -- a version that does not exist
-  ;; in Maven Central -- and no :main-opts, so `clojure -M:lint` failed on
+  ;; in Maven Central -- and no :main-opts, so `kbb -M:lint` failed on
   ;; classpath and reported zero warnings. That is why six misplaced docstrings
   ;; survived here. Fleet-standard shape (matches cloud-itonami-isic-1020).
   :lint {:replace-deps {clj-kondo/clj-kondo {:mvn/version "2024.11.14"}}

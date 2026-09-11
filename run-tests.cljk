@@ -1,6 +1,6 @@
 ;; Run the beverageops actor test suite under nbb.
 ;;
-;;   nbb --classpath src:test run-tests.cljk
+;;   kbb --backend sci --classpath src:test run-tests.cljk
 ;;
 ;; The `--classpath` is required: without it nbb cannot resolve
 ;; `beverageops.test`. Exits 1 when any test fails -- this script previously

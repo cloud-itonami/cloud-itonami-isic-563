@@ -57,10 +57,10 @@ Any operation outside this set is rejected.
 
 ```bash
 # Tests (via nbb)
-nbb run-tests.cljk
+kbb --backend sci run-tests.cljk
 
 # Demo (via nbb)
-nbb run-demo.cljk
+kbb --backend sci run-demo.cljk
 ```
 
 ## Operator Console (build-time HTML sample)
@@ -76,7 +76,7 @@ change).
 
 ```bash
 # Regenerate the operator console (pure JVM Clojure, no nbb)
-clojure -M:render-html
+kbb -M:render-html
 ```
 
 ## References

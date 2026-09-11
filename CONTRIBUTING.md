@@ -10,13 +10,13 @@ git clone https://github.com/cloud-itonami/cloud-itonami-isic-563.git
 cd cloud-itonami-isic-563
 
 # Install dependencies
-clojure -M:dev
+kbb -M:dev
 
 # Run tests
-nbb run-tests.cljk
+kbb --backend sci run-tests.cljk
 
 # Run demo
-nbb run-demo.cljk
+kbb --backend sci run-demo.cljk
 ```
 
 ## Code Standards
@@ -46,7 +46,7 @@ This actor is **administrative coordination only**:
 1. **Fork** the repository
 2. **Create a branch** for your feature: `git checkout -b feature/my-feature`
 3. **Write tests** for new functionality
-4. **Run tests** to ensure all pass: `nbb run-tests.cljk`
+4. **Run tests** to ensure all pass: `kbb --backend sci run-tests.cljk`
 5. **Commit** with clear messages: `git commit -m "feat: description"`
 6. **Push** to your fork: `git push origin feature/my-feature`
 7. **Open a PR** with description of changes
