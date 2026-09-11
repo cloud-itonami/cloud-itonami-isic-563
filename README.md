@@ -51,16 +51,16 @@ Any operation outside this set is rejected.
 - **Operation** (`beverageops.operation`): langgraph-clj StateGraph single-run orchestration
 - **Phase** (`beverageops.phase`): Rollout phase control (0–3 auto-commit gates)
 - **Sim** (`beverageops.sim`): Deterministic demo (5 scenarios offline)
-- **Tests** (`test/beverageops/test.cljc`): 16/16 passing
+- **Tests** (`test/beverageops/test.cljk`): 16/16 passing
 
 ## Running Tests & Demo
 
 ```bash
 # Tests (via nbb)
-nbb run-tests.cljs
+nbb run-tests.cljk
 
 # Demo (via nbb)
-nbb run-demo.cljs
+nbb run-demo.cljk
 ```
 
 ## Operator Console (build-time HTML sample)
