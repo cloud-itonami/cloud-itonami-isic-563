@@ -49,7 +49,7 @@
   ids (`t1`/`t2`/`t3`, `napkins`/`glassware`/`cleaning-supplies`) match
   exactly what `beverageops.store/create-store` seeds AND what this
   repo's own WORKING root-level `demo.cljk`/`test.cljk` (nbb-runnable,
-  `nbb -cp src demo.cljk` / `nbb -cp src test.cljk`) already exercise --
+  `kbb --backend sci -cp src demo.cljk` / `kbb --backend sci -cp src test.cljk`) already exercise --
   both were run and passed before this file was written. Every proposal
   below was independently dry-run through the real
   `beverageops.operation/propose-operation` -> `beverageops.governor/
@@ -61,7 +61,7 @@
   but that bug is irrelevant here: this renderer is plain JVM Clojure
   and never touches those two files).
 
-  Usage: `clojure -M:render-html [out-file]`
+  Usage: `kbb -M:render-html [out-file]`
   (default `docs/samples/operator-console.html`)."
   (:require [jp-go-dds.skin]
             [kotoba.lang.text :as str]
@@ -199,7 +199,7 @@
      "<main>\n"
      "  <section class=\"card\">\n"
      "    <h2>Tables</h2>\n"
-     "    <p class=\"muted\">Demo snapshot — build-time-generated from <code>beverageops.store</code> via <code>beverageops.render-html</code> (<code>clojure -M:render-html</code>), regenerated nightly.</p>\n"
+     "    <p class=\"muted\">Demo snapshot — build-time-generated from <code>beverageops.store</code> via <code>beverageops.render-html</code> (<code>kbb -M:render-html</code>), regenerated nightly.</p>\n"
      "    <table>\n"
      "      <thead><tr><th>Table</th><th>Name</th><th>Seats</th><th>Roster status</th></tr></thead>\n"
      "      <tbody>\n"
