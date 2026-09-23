@@ -1,6 +1,6 @@
 (ns beverageops.store
-  (:require #?@(:clj [[clojure.edn :as edn]]
-                 :cljs [[clojure.edn :as edn]]))
+  (:require #?@(:clj [[kotoba.lang.edn :as edn]]
+                 :cljs [[kotoba.lang.edn :as edn]]))
   #?(:clj (:import (java.time ZonedDateTime))))
 
 ;;; STORE protocol & MemStore implementation
